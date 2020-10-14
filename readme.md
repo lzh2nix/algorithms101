@@ -1,4 +1,4 @@
-## implement Robert Sedgewick's mooc course Algorithms I/II in golang
+## implement Robert Sedgewick's mooc course <Algorithms I/II> in golang
 
 这是一个伟大的时代，我们可以通过mooc接触到顶尖大学的牛逼老师，尤其是看到你读过的书的原作者给你讲课的时候。
 
