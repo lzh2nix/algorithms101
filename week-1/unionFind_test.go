@@ -16,6 +16,7 @@ func TestQuickFind(t *testing.T) {
 		uf.Union(6, 5)
 		uf.Union(9, 4)
 		uf.Union(2, 1)
+		assert.False(t, uf.Connected(1, 2), "test conncted(1, 2)")
 		assert.False(t, uf.Connected(0, 7), "test conncted(0, 7)")
 		assert.True(t, uf.Connected(8, 9), "test connected(8,9)")
 		uf.Union(5, 0)
