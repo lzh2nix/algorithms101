@@ -24,6 +24,8 @@ func TestQuickFind(t *testing.T) {
 		uf.Union(6, 1)
 		uf.Union(1, 0)
 		assert.True(t, uf.Connected(0, 7), "test connected(0,7)")
+		assert.False(t, uf.Connected(9, 7), "test connected(7,9)")
+
 	}
 
 }
