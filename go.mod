@@ -1,4 +1,4 @@
-module github.com/lzh2nix/algorithms101/week-1
+module github.com/lzh2nix/algorithms101
 
 go 1.15
 
