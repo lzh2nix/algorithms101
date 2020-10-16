@@ -3,7 +3,7 @@ package week1_test
 import (
 	"testing"
 
-	week1 "github.com/lzh2nix/algorithms101/week-1"
+	"github.com/lzh2nix/algorithms101/week1"
 	"github.com/stretchr/testify/assert"
 )
 

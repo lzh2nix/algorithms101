@@ -1,0 +1,10 @@
+
+mode: atomic
+github.com/lzh2nix/algorithms101/week1/unionFind.go:24.41,26.25 2 1
+github.com/lzh2nix/algorithms101/week1/unionFind.go:29.2,29.24 1 1
+github.com/lzh2nix/algorithms101/week1/unionFind.go:26.25,28.3 1 10
+github.com/lzh2nix/algorithms101/week1/unionFind.go:31.38,34.34 2 9
+github.com/lzh2nix/algorithms101/week1/unionFind.go:39.2,39.20 1 9
+github.com/lzh2nix/algorithms101/week1/unionFind.go:34.34,35.22 1 90
+github.com/lzh2nix/algorithms101/week1/unionFind.go:35.22,37.4 1 19
+github.com/lzh2nix/algorithms101/week1/unionFind.go:42.47,44.2 1 5
