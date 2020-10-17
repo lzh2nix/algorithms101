@@ -11,7 +11,7 @@ type DynamicConnect interface {
 
 // p, q is connect if p and q have same id
 /*       0 1 2 3 4 5 6 7 8 9
-   id[] 0 1 1 8 8 0 0 1 8 8
+   id[]  0 1 1 8 8 0 0 1 8 8
 
 0,5,6 is connected
 1,2,7 is connected
@@ -21,6 +21,7 @@ type QuickFind struct {
 	ID []int
 }
 
+// create a quick find  instance
 func NewQuickFind(N int) DynamicConnect {
 	ids := make([]int, N)
 	for i := 0; i < N; i++ {
@@ -28,6 +29,8 @@ func NewQuickFind(N int) DynamicConnect {
 	}
 	return &QuickFind{ids}
 }
+
+// implement DynamicConnet Union method
 func (qf *QuickFind) Union(p, q int) {
 
 	qId := qf.ID[q]
@@ -39,6 +42,89 @@ func (qf *QuickFind) Union(p, q int) {
 	fmt.Println(qf.ID)
 }
 
+// implement DynamicConnet Connected method
 func (qf *QuickFind) Connected(p, q int) bool {
 	return qf.ID[p] == qf.ID[q]
+}
+
+// p, q is connect if p and q have root id
+/*       0 1 2 3 4 5 6 7 8 9
+   id[]  5 2 7 4 9 6 6 7 3 9
+
+                6   7    9
+               /   /    /
+              5   2    4
+             /   /    /
+            0   7    3
+                    /
+                   8
+0,5,6 is connected
+1,2,7 is connected
+3,4,8,9 is connected
+*/
+type QuickUnion struct {
+	ID []int
+}
+
+// create a quick find  instance
+func NewQuickUnion(N int) DynamicConnect {
+	ids := make([]int, N)
+	for i := 0; i < N; i++ {
+		ids[i] = i
+	}
+	return &QuickUnion{ids}
+}
+
+// implement DynamicConnet Union method
+func (qu *QuickUnion) Union(p, q int) {
+	qu.ID[p] = q
+}
+func (qu *QuickUnion) root(p int) int {
+	for {
+		if p == qu.ID[p] {
+			break
+		}
+		p = qu.ID[p]
+	}
+	return p
+}
+
+// implement DynamicConnet Connected method
+func (qu *QuickUnion) Connected(p, q int) bool {
+	return qu.root(qu.ID[p]) == qu.root(qu.ID[q])
+}
+
+// same as quickunion but connect the root when union action
+type QuickUnionLazy struct {
+	ID []int
+}
+
+// create a quick find  instance
+func NewQuickUnionLazy(N int) DynamicConnect {
+	ids := make([]int, N)
+	for i := 0; i < N; i++ {
+		ids[i] = i
+	}
+	return &QuickUnionLazy{ids}
+}
+
+// implement DynamicConnet Union method
+func (qu *QuickUnionLazy) Union(p, q int) {
+	rootP := qu.root(p)
+	rootQ := qu.root(q)
+	qu.ID[rootP] = rootQ
+}
+func (qu *QuickUnionLazy) root(p int) int {
+	for {
+		if p == qu.ID[p] {
+			break
+		}
+		p = qu.ID[p]
+	}
+	return p
+}
+
+// implement DynamicConnet Connected method
+func (qu *QuickUnionLazy) Connected(p, q int) bool {
+	return qu.root(qu.ID[p]) == qu.root(qu.ID[q])
 }
