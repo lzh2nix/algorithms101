@@ -36,3 +36,7 @@ func TestQuickUnion(t *testing.T) {
 func TestQuickUnionLazy(t *testing.T) {
 	test(week1.NewQuickUnionLazy(10), t, "quickUnionLazy")
 }
+
+func TestQuickUnionWeight(t *testing.T) {
+	test(week1.NewQuickUnionWeight(10), t, "quickUnionWeight")
+}
