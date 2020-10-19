@@ -128,3 +128,51 @@ func (qu *QuickUnionLazy) root(p int) int {
 func (qu *QuickUnionLazy) Connected(p, q int) bool {
 	return qu.root(qu.ID[p]) == qu.root(qu.ID[q])
 }
+
+// same as quickunion but balance by linking root of smaller tree to root of large tree
+type QuickUnionWeight struct {
+	ID []int
+	SZ []int
+}
+
+// create a quick find  instance
+func NewQuickUnionWeight(N int) DynamicConnect {
+	ids := make([]int, N)
+	sz := make([]int, N)
+	for i := 0; i < N; i++ {
+		ids[i] = i
+		sz[i] = 1
+	}
+	return &QuickUnionWeight{ids,sz}
+}
+
+// implement DynamicConnet Union method
+func (qu *QuickUnionWeight) Union(p, q int) {
+	rootP := qu.root(p)
+	rootQ := qu.root(q)
+	if rootP == rootQ {
+		return
+	}
+	if qu.SZ[rootP] > qu.SZ[rootQ] {
+		qu.SZ[rootP] += qu.SZ[rootQ]
+		qu.ID[rootQ] = qu.ID[rootP]
+	} else {
+		qu.SZ[rootQ] += qu.SZ[rootP]
+		qu.ID[rootP] = qu.ID[rootQ]
+	}
+}
+func (qu *QuickUnionWeight) root(p int) int {
+	for {
+		if p == qu.ID[p] {
+			break
+		}
+		qu.ID[p] = qu.ID[qu.ID[p]]
+		p = qu.ID[p]
+	}
+	return p
+}
+
+// implement DynamicConnet Connected method
+func (qu *QuickUnionWeight) Connected(p, q int) bool {
+	return qu.root(qu.ID[p]) == qu.root(qu.ID[q])
+}
