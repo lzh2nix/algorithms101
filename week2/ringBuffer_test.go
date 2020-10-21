@@ -41,4 +41,6 @@ func TestRingBuffer(t *testing.T) {
 	assert.Equal(t, 5, v.Value)
 	v, err = rb.Poll()
 	assert.NotNil(t, err)
+	err = rb.Push(&week2.Item{6})
+	assert.Nil(t, err)
 }

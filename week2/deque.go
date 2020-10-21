@@ -1,6 +1,7 @@
 package week2
 
 // double end queue(can sadd/remove from front && end)
+//Algorithms 4th 1.3.33
 type Deque struct {
 	elements []*Item
 }

@@ -2,7 +2,7 @@ package week2
 
 import "errors"
 
-// array base ringBuffer
+// array base ringBuffer(Algorithms 4th 1.3.39)
 type RingBuffer struct {
 	// capacity of RingBuffer
 	capacity int
@@ -15,8 +15,11 @@ type RingBuffer struct {
 	len int
 }
 
-var errFULL = errors.New("ringBuffer is full")
-var errEmpty = errors.New("ringBuffer is empty")
+// ring buffer is full
+var FULL = errors.New("ringBuffer is full")
+
+// ring buffer is empty
+var Empty = errors.New("ringBuffer is empty")
 
 // create a new ringBuffer
 func NewRingBuffer(cap int) *RingBuffer {
@@ -24,10 +27,11 @@ func NewRingBuffer(cap int) *RingBuffer {
 	return &RingBuffer{cap, data, 0, 0, 0}
 }
 
+// push to ringBuffer
 func (rb *RingBuffer) Push(item *Item) error {
 
 	if rb.len == rb.capacity {
-		return errFULL
+		return FULL
 	}
 	rb.data[rb.write] = item
 	rb.write = (rb.write + 1) % rb.capacity
@@ -35,9 +39,10 @@ func (rb *RingBuffer) Push(item *Item) error {
 	return nil
 }
 
+// pull from ringBuffer
 func (rb *RingBuffer) Poll() (*Item, error) {
 	if rb.len == 0 {
-		return nil, errEmpty
+		return nil, Empty
 	}
 	item := rb.data[rb.read]
 	rb.read = (rb.read + 1) % rb.capacity
