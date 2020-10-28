@@ -1,5 +1,7 @@
 package sort
 
+import "math/rand"
+
 // select sort
 func SelectSort(a []int) {
 	for i := 0; i < len(a); i++ {
@@ -77,4 +79,37 @@ func merge(a, aux []int, lo, mid, hi int) {
 			j++
 		}
 	}
+}
+
+// add quick sort
+func QuickSort(a []int) {
+	rand.Shuffle(len(a), func(i, j int) { a[i], a[j] = a[j], a[i] })
+	quickSort(a, 0, len(a)-1)
+}
+
+func quickSort(a []int, lo, hi int) {
+	if lo >= hi {
+		return
+	}
+	j := parition(a, lo, hi)
+	quickSort(a, lo, j-1)
+	quickSort(a, j+1, hi)
+}
+func parition(a []int, lo, hi int) int {
+	i, j := lo+1, hi
+
+	for {
+		for i < hi && a[i] < a[lo] {
+			i++
+		}
+		for j > lo && a[j] >= a[lo] {
+			j--
+		}
+		if i >= j {
+			break
+		}
+		a[i], a[j] = a[j], a[i]
+	}
+	a[j], a[lo] = a[lo], a[j]
+	return j
 }
