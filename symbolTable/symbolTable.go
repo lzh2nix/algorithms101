@@ -1,5 +1,7 @@
 package symbolTable
 
+import "fmt"
+
 // string:int based symbol table interface
 type SymbolTable interface {
 	// put key-value pair to symbol table a[key] = val(if key already exist, update it)
@@ -14,6 +16,8 @@ type SymbolTable interface {
 	IsEmpty() bool
 	// number of key-value pair in symbol table
 	Size() int
+	// print all element
+	Print()
 }
 
 // linked list based symbol table
@@ -93,4 +97,145 @@ func (st *LinkedListST) IsEmpty() bool {
 // implement SybmolTable's Size
 func (st *LinkedListST) Size() int {
 	return st.size
+}
+
+func (st *LinkedListST) Print() {
+	v := st.Node.next
+	for v != nil {
+		fmt.Print(v.key, ",")
+		v = v.next
+	}
+	fmt.Println()
+}
+
+type BSTNode struct {
+	key         string
+	value       int
+	left, right *BSTNode
+	count       int
+}
+
+func size(x *BSTNode) int {
+	if x == nil {
+		return 0
+	}
+	return x.count
+}
+
+type BST struct {
+	root *BSTNode
+}
+
+func NewBST() SymbolTable {
+	return &BST{}
+}
+func (bst *BST) Put(key string, v int) {
+	bst.root = put(bst.root, key, v)
+}
+func put(x *BSTNode, key string, v int) *BSTNode {
+	if x == nil {
+		return &BSTNode{key: key, value: v, count: 1}
+	}
+	if x.key > key {
+		x.left = put(x.left, key, v)
+	} else if x.key < key {
+		x.right = put(x.right, key, v)
+	} else {
+		x.value = v
+	}
+	x.count = size(x.left) + size(x.right) + 1
+	return x
+}
+func (bst *BST) Get(key string) (bool, int) {
+	x := bst.root
+	for x != nil {
+		if x.key == key {
+			return true, x.value
+		} else if x.key > key {
+			x = x.left
+		} else {
+			x = x.right
+		}
+	}
+	return false, 0
+}
+
+// Delete ...
+func (bst *BST) Delete(key string) {
+	bst.root = delete(bst.root, key)
+}
+
+func delete(x *BSTNode, key string) *BSTNode {
+	if x == nil {
+		return nil
+	}
+	if x.key > key {
+		x.left = delete(x.left, key)
+	} else if x.key < key {
+		x.right = delete(x.right, key)
+	} else {
+		if x.right == nil {
+			return x.left
+		}
+		if x.left == nil {
+			return x.right
+		}
+		t := x
+		x := min(t.right)
+		x.right = deleteMin(t.right)
+		x.left = t.left
+		t = nil
+	}
+	x.count = size(x.left) + size(x.right) + 1
+	return x
+}
+
+// Contain ...
+func (bst *BST) Contain(key string) bool {
+	e, _ := bst.Get(key)
+	return e == true
+}
+
+// Size of BST
+func (bst *BST) Size() int {
+	if bst.root == nil {
+		return 0
+	}
+	return bst.root.count
+}
+
+func min(x *BSTNode) *BSTNode {
+	for x != nil {
+		if x.left == nil {
+			return x
+		}
+		x = x.left
+	}
+	return nil
+}
+
+func deleteMin(x *BSTNode) *BSTNode {
+	if x.left == nil {
+		return x.left
+	}
+	x.left = deleteMin(x.left)
+	x.count = size(x.left) + size(x.right) + 1
+	return x
+}
+func (bst *BST) IsEmpty() bool {
+	return bst.root == nil
+}
+
+func (bst *BST) Print() {
+	print(bst.root)
+	fmt.Println()
+}
+
+func print(x *BSTNode) {
+	if x == nil {
+		return
+	}
+	print(x.left)
+	fmt.Print(x.key, ",")
+	print(x.right)
 }
