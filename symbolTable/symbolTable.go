@@ -18,6 +18,8 @@ type SymbolTable interface {
 	Size() int
 	// print all element
 	Print()
+	// min in SymbolTable
+	Min() (bool, string)
 }
 
 // linked list based symbol table
@@ -108,6 +110,21 @@ func (st *LinkedListST) Print() {
 	fmt.Println()
 }
 
+func (st *LinkedListST) Min() (bool, string) {
+	v := st.Node.next
+	min := v
+	if min == nil {
+		return false, ""
+	}
+	for v != nil {
+		if v.key < min.key {
+			min = v
+		}
+		v = v.next
+	}
+	return true, min.key
+}
+
 type BSTNode struct {
 	key         string
 	value       int
@@ -181,7 +198,7 @@ func delete(x *BSTNode, key string) *BSTNode {
 			return x.right
 		}
 		t := x
-		x := min(t.right)
+		x = min(t.right)
 		x.right = deleteMin(t.right)
 		x.left = t.left
 		t = nil
@@ -202,6 +219,14 @@ func (bst *BST) Size() int {
 		return 0
 	}
 	return bst.root.count
+}
+
+func (bst *BST) Min() (bool, string) {
+	min := min(bst.root)
+	if min == nil {
+		return false, ""
+	}
+	return true, min.key
 }
 
 func min(x *BSTNode) *BSTNode {
