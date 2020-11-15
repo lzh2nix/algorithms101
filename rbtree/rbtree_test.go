@@ -53,6 +53,7 @@ func test(t *testing.T, st *rbtree.RBT, tc string) {
 	st.Delete("ccc")
 	st.Delete("fff")
 	st.Delete("ggg")
+
 	e2, v2 = st.Min()
 	assert.True(t, e2, tc)
 	assert.Equal(t, "eee", v2, tc)
@@ -66,7 +67,7 @@ func test(t *testing.T, st *rbtree.RBT, tc string) {
 }
 
 // TestLinkedListST ...
-func TestRTB(t *testing.T) {
+func TestRBT(t *testing.T) {
 	st := rbtree.NewRBT()
 	test(t, st, "RBT version symbolTable")
 	for i := 0; i < 100; i++ {

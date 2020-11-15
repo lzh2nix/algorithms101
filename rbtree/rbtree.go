@@ -29,7 +29,7 @@ func NewRBT() *RBT {
 }
 func (rbt *RBT) Put(key string, v int) {
 	rbt.root = put(rbt.root, key, v)
-	rbt.root.color = BLACK
+	//	rbt.root.color = BLACK
 }
 func isRed(x *RBNode) bool {
 	if x == nil {
@@ -129,9 +129,9 @@ func moveRedRight(h *RBNode) *RBNode {
 // Delete ...
 func (rbt *RBT) Delete(key string) {
 	rbt.root = delete(rbt.root, key)
-	if rbt.root != nil {
-		rbt.root.color = BLACK
-	}
+	//	if rbt.root != nil {
+	//rbt.root.color = BLACK
+	//}
 }
 
 func delete(h *RBNode, key string) *RBNode {
@@ -141,8 +141,9 @@ func delete(h *RBNode, key string) *RBNode {
 	if h.key > key {
 		if h.left != nil && !isRed(h.left) && !isRed(h.left.left) {
 			h = moveRedLeft(h)
-			h.left = delete(h.left, key)
 		}
+		h.left = delete(h.left, key)
+
 	} else {
 		if isRed(h.left) {
 			h = rotateRight(h)
@@ -156,6 +157,7 @@ func delete(h *RBNode, key string) *RBNode {
 		if h.key == key {
 			min := min(h.right)
 			h.value = min.value
+			h.key = min.key
 			h.right = deleteMin(h.right)
 		} else {
 			h.right = delete(h.right, key)
@@ -237,6 +239,6 @@ func print(x *RBNode) {
 		return
 	}
 	print(x.left)
-	fmt.Print(x.key, ",")
+	fmt.Print(x.key, x.color, x.count, ",")
 	print(x.right)
 }
