@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"testing"
 
+	"github.com/lzh2nix/algorithms101/rbtree"
 	"github.com/lzh2nix/algorithms101/symbolTable"
 	"github.com/stretchr/testify/assert"
 )
@@ -111,6 +112,18 @@ func Benchmark1KBSTST(b *testing.B) {
 		st.Put(k, n)
 	}
 }
+func Benchmark1kRTB(b *testing.B) {
+	st := rbtree.NewRBT()
+	for i := 0; i < b.N; i++ {
+		n := rand.Intn(1000)
+		k := fmt.Sprintf("%d", n)
+		if n%3 == 0 {
+			st.Delete(k)
+			continue
+		}
+		st.Put(k, n)
+	}
+}
 func Benchmark1KStdMap(b *testing.B) {
 	st := map[string]int{}
 	for i := 0; i < b.N; i++ {
@@ -138,6 +151,18 @@ func Benchmark10KLinkedListST(b *testing.B) {
 }
 func Benchmark10KBSTST(b *testing.B) {
 	st := symbolTable.NewBST()
+	for i := 0; i < b.N; i++ {
+		n := rand.Intn(10000)
+		k := fmt.Sprintf("%d", n)
+		if n%3 == 0 {
+			st.Delete(k)
+			continue
+		}
+		st.Put(k, n)
+	}
+}
+func Benchmark10KRBT(b *testing.B) {
+	st := rbtree.NewRBT()
 	for i := 0; i < b.N; i++ {
 		n := rand.Intn(10000)
 		k := fmt.Sprintf("%d", n)
@@ -186,10 +211,71 @@ func Benchmark100KBSTST(b *testing.B) {
 		st.Put(k, n)
 	}
 }
+func Benchmark100RBT(b *testing.B) {
+	st := rbtree.NewRBT()
+	for i := 0; i < b.N; i++ {
+		n := rand.Intn(100000)
+		k := fmt.Sprintf("%d", n)
+		if n%3 == 0 {
+			st.Delete(k)
+			continue
+		}
+		st.Put(k, n)
+	}
+}
 func Benchmark100KStdMap(b *testing.B) {
 	st := map[string]int{}
 	for i := 0; i < b.N; i++ {
 		n := rand.Intn(100000)
+		k := fmt.Sprintf("%d", n)
+		if n%3 == 0 {
+			delete(st, k)
+			continue
+		}
+		st[k] = n
+	}
+}
+
+func Benchmark1MLinkedListST(b *testing.B) {
+	st := symbolTable.NewLinkedListST()
+	for i := 0; i < b.N; i++ {
+		n := rand.Intn(1000000)
+		k := fmt.Sprintf("%d", n)
+		if n%3 == 0 {
+			st.Delete(k)
+			continue
+		}
+		st.Put(k, n)
+	}
+}
+func Benchmark1MBSTST(b *testing.B) {
+	st := symbolTable.NewBST()
+	for i := 0; i < b.N; i++ {
+		n := rand.Intn(1000000)
+		k := fmt.Sprintf("%d", n)
+		if n%3 == 0 {
+			st.Delete(k)
+			continue
+		}
+		st.Put(k, n)
+	}
+}
+func Benchmark1MRBT(b *testing.B) {
+	st := rbtree.NewRBT()
+	for i := 0; i < b.N; i++ {
+		n := rand.Intn(1000000)
+		k := fmt.Sprintf("%d", n)
+		if n%3 == 0 {
+			st.Delete(k)
+			continue
+		}
+		st.Put(k, n)
+	}
+}
+func Benchmark1MStdMap(b *testing.B) {
+	st := map[string]int{}
+	for i := 0; i < b.N; i++ {
+		n := rand.Intn(1000000)
 		k := fmt.Sprintf("%d", n)
 		if n%3 == 0 {
 			delete(st, k)
